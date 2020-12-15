@@ -50,7 +50,7 @@ namespace VideoShop.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Site}/{action=Index}/{id?}");
+                    pattern: "{controller=admin}/{action=Index}/{id?}");
             });
         }
     }
