@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using VideoShop.Data;
+using Microsoft.EntityFrameworkCore;
+using VideoShop.Domain;
 
 namespace VideoShop.Web
 {
@@ -24,6 +27,19 @@ namespace VideoShop.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+
+            services.AddIdentity<AppUser, AppRole>(Options =>
+             {
+                 Options.User.RequireUniqueEmail = true;
+                 Options.Password.RequireNonAlphanumeric = true;
+
+             }
+            ).AddEntityFrameworkStores<VideoShopDbContext>();
+            
+            services.AddDbContext<VideoShopDbContext>
+                (options => options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnetion"))
+                ) ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
